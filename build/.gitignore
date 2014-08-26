@@ -6,4 +6,11 @@ bldlog-1.txt
 btoa
 cmake_install.cmake
 compress
-
+*.vcxproj
+*.filters
+*.user
+Debug/*
+Release/*
+Win32/*
+*.dir/*
+*.sln
