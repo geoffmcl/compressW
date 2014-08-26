@@ -9,17 +9,17 @@
 #ifdef _MSC_VER
 #pragma warning (disable:4996)
 #endif
-
+#include <sys/types.h>
 #include <stdio.h>
 #include <stdlib.h> // for exit(), ...
 #include <string.h> // for strcmp(), ...
 #ifdef _MSC_VER
 #include <process.h>
 #define getpid _getpid
-#define reg int
 #else
-#define reg register
+#include <unistd.h> // unlink(), getpid()...
 #endif
+#define reg int
 
 #define ADD_FILE_DELETE /* remove to keep 'temporary' file */
 

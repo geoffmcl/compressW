@@ -1,5 +1,4 @@
-compress32
-compress64
+compress
 bldlog-1.txt
 atob
 btoa

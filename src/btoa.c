@@ -17,16 +17,15 @@
 #ifdef _MSC_VER
 #pragma warning (disable:4996)
 #endif
-
+#include <sys/types.h>
 #include <stdio.h>
 #include <stdlib.h> // for exit(), ...
 #include <string.h> // for strcmp(), ...
-
-#ifdef _MSC_VER
-#define reg int
-#else
-#define reg register
+#ifndef _MSC_VER
+#include <unistd.h> // unlink(), getpid()...
 #endif
+
+#define reg int
 
 #define MAXPERLINE 78
 

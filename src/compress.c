@@ -135,11 +135,14 @@
 #include <signal.h>
 #include <string.h> // strcmp(), ...
 #include <stdlib.h>    // exit(), ...
+#include <fcntl.h> // for O_BINARY, ...
 #ifdef _MSC_VER
 #include <sys/utime.h> // _utime(), ...
-#include <fcntl.h> // for O_BINARY, ...
 #include <io.h> // open(), read(),
 #include <conio.h> // _getch(), ...
+#else
+#include <unistd.h> // chowm(), unlink(), getpid()...
+#include <utime.h> // utime(), ...
 #endif
 #include "compress.h"
 
@@ -930,7 +933,7 @@ void output( code_int code )
 	 * Since code is always >= 8 bits, only need to mask the first
 	 * hunk on the left.
 	 */
-	*bp = (*bp & rmask[r_off]) | (code << r_off) & lmask[r_off];
+	*bp = (*bp & rmask[r_off]) | ((code << r_off) & lmask[r_off]);
 	bp++;
 	bits -= (8 - r_off);
 	code >>= 8 - r_off;
@@ -1354,11 +1357,11 @@ void copystat(char *ifname, char *ofname)
 {
     struct stat statbuf;
     int mode;
-#ifdef _MSC_VER
+//#ifdef _MSC_VER
     struct utimbuf timep;
-#else
-    time_t timep[2];
-#endif
+//#else
+//    time_t timep[2];
+//#endif
 
     fclose(stdout);
     if (stat(ifname, &statbuf)) {		/* Get stat on input file */
@@ -1391,18 +1394,18 @@ void copystat(char *ifname, char *ofname)
 	            perror(ofname);
 #ifndef _MSC_VER
 	        chown(ofname, statbuf.st_uid, statbuf.st_gid);	/* Copy ownership */
-	        timep[0] = statbuf.st_atime;
-	        timep[1] = statbuf.st_mtime;
-	        utime(ofname, timep);	/* Update last accessed and modified times */
+//	        timep[0] = statbuf.st_atime;
+//	        timep[1] = statbuf.st_mtime;
+//	        utime(ofname, timep);	/* Update last accessed and modified times */
 #else
             if (in_stream)
                 fclose(in_stream);
             in_stream = 0;
+#endif
             memset(&timep,0,sizeof(timep));
             timep.actime  = statbuf.st_atime;
             timep.modtime = statbuf.st_mtime;
 	        utime(ofname, &timep);	/* Update last accessed and modified times */
-#endif
 	        if (unlink(ifname)) {	/* Remove input file */
 	            perror(ifname);
         }
