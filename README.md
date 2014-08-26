@@ -1,7 +1,7 @@
 Compression, based on the LZW compression algorithm.
 ----------------------------------------------------
 
-This is my Windows port of the 1985 Revison 4.0 of the 'compress' application, now bumped
+This is my Windows port of the 1985 Revison 4.0 of the **compress** application, now bumped
 to Revision 4.1.
 
 The first step was to add a CMakeLists.txt to do the building. This should allow 
@@ -46,7 +46,7 @@ years that unisys held the patent, <a href="http://www.gzip.org/" target="_blank
 and <a href="http://bzip.org/" target="_blank">bzip2</a> became the preferred compression 
 tools, and they usually achieve a sometimes significant increased compression ratio.
 
-But compress still works, and on a simple ascii file usually achieves a 40-50% compression
+But **compress** still works, and on a simple ascii file usually achieves a 40-50% compression
 ratio.
 
 Enjoy.
